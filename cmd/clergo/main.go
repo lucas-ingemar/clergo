@@ -121,7 +121,7 @@ type model struct {
 	list list.Model
 	// itemGenerator *randomItemGenerator
 	keys         *listKeyMap
-	delegateKeys *delegateKeyMap
+	delegateKeys *components.DelegateKeyMap
 	textarea     textarea.Model
 	textareaMode bool
 	// viewportReady bool
@@ -129,7 +129,7 @@ type model struct {
 
 func newModel() model {
 	var (
-		delegateKeys = newDelegateKeyMap()
+		delegateKeys = components.NewDelegateKeyMap()
 		listKeys     = newListKeyMap()
 	)
 
@@ -141,7 +141,7 @@ func newModel() model {
 	}
 
 	// Setup list
-	delegate := newItemDelegate(delegateKeys)
+	delegate := components.NewItemDelegate(delegateKeys)
 	itemsList := list.New(items, delegate, 0, 0)
 	itemsList.Title = "Clergo"
 	itemsList.Styles.Title = titleStyle
@@ -243,7 +243,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, nil
 
 		case key.Matches(msg, m.keys.insertItem):
-			m.delegateKeys.remove.SetEnabled(true)
+			m.delegateKeys.Remove.SetEnabled(true)
 			newItem := shared.Item{
 				TitleVar: "New",
 				TagsVar:  []string{"tag1"},

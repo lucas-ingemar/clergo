@@ -7,10 +7,10 @@ import (
 	"sort"
 	"strings"
 
-	"git2.borje.zone/public/clergo/internal/config"
-	"git2.borje.zone/public/clergo/internal/markdown"
-	"git2.borje.zone/public/clergo/internal/shared"
 	"github.com/charmbracelet/bubbles/list"
+	"github.com/lucas-ingemar/clergo/internal/config"
+	"github.com/lucas-ingemar/clergo/internal/markdown"
+	"github.com/lucas-ingemar/clergo/internal/shared"
 )
 
 func saveToFile(item shared.Item, NewFilename, OldFilename string) error {

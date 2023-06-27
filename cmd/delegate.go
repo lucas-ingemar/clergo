@@ -1,10 +1,10 @@
 package main
 
 import (
-	"git2.borje.zone/public/clergo/internal/shared"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/lucas-ingemar/clergo/internal/shared"
 )
 
 func newItemDelegate(keys *delegateKeyMap) list.DefaultDelegate {

@@ -4,7 +4,7 @@ import (
 	"math/rand"
 	"sync"
 
-	"git2.borje.zone/public/clergo/internal/shared"
+	"github.com/lucas-ingemar/clergo/internal/shared"
 )
 
 type randomItemGenerator struct {

@@ -5,16 +5,16 @@ import (
 	"os"
 	"path"
 
-	"git2.borje.zone/public/clergo/internal/components"
-	"git2.borje.zone/public/clergo/internal/config"
-	"git2.borje.zone/public/clergo/internal/io"
-	"git2.borje.zone/public/clergo/internal/markdown"
-	"git2.borje.zone/public/clergo/internal/shared"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/textarea"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/lucas-ingemar/clergo/internal/components"
+	"github.com/lucas-ingemar/clergo/internal/config"
+	"github.com/lucas-ingemar/clergo/internal/io"
+	"github.com/lucas-ingemar/clergo/internal/markdown"
+	"github.com/lucas-ingemar/clergo/internal/shared"
 )
 
 var (

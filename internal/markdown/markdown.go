@@ -5,8 +5,8 @@ import (
 	"path"
 	"strings"
 
-	"git2.borje.zone/public/clergo/internal/config"
-	"git2.borje.zone/public/clergo/internal/shared"
+	"github.com/lucas-ingemar/clergo/internal/config"
+	"github.com/lucas-ingemar/clergo/internal/shared"
 )
 
 func Generate(item shared.Item) string {

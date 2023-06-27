@@ -1,4 +1,4 @@
-module git2.borje.zone/public/clergo
+module github.com/lucas-ingemar/clergo
 
 go 1.20
 

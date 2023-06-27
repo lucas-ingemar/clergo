@@ -1,10 +1,10 @@
 package components
 
 import (
-	"git2.borje.zone/public/clergo/internal/shared"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/textarea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/lucas-ingemar/clergo/internal/shared"
 )
 
 var (

@@ -299,6 +299,13 @@ func main() {
 	// fmt.Println(err)
 	// fmt.Println(items[0].(shared.Item).Title())
 	// return
+	// err := io.WriteFile(&shared.Item{
+	// 	TitleVar: "dotm_test",
+	// 	TagsVar:  []string{"tata"},
+	// 	BodyText: "hejsna på dajesn",
+	// })
+	// fmt.Println(err)
+	// return
 
 	if _, err := tea.NewProgram(newModel()).Run(); err != nil {
 		fmt.Println("Error running program:", err)

@@ -7,7 +7,9 @@ import (
 )
 
 type Config struct {
-	LibPath string
+	LibPath             string
+	DotManagerAddCmd    string
+	EnableDotManagerAdd bool
 }
 
 func initConfig(c Config) Config {
@@ -17,6 +19,8 @@ func initConfig(c Config) Config {
 
 var (
 	CONFIG = initConfig(Config{
-		LibPath: "~/.clergo",
+		LibPath:             "~/.clergo",
+		DotManagerAddCmd:    "yadm add {{.Filename}}",
+		EnableDotManagerAdd: true,
 	})
 )

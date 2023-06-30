@@ -1,17 +1,25 @@
 package io
 
 import (
+	"bytes"
 	"errors"
 	"os"
+	"os/exec"
 	"path"
 	"sort"
 	"strings"
+
+	"text/template"
 
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/lucas-ingemar/clergo/internal/config"
 	"github.com/lucas-ingemar/clergo/internal/markdown"
 	"github.com/lucas-ingemar/clergo/internal/shared"
 )
+
+func fullNotesFileName(filename string) string {
+	return path.Join(config.CONFIG.LibPath, "notes", filename)
+}
 
 func saveToFile(item shared.Item, NewFilename, OldFilename string) error {
 	if NewFilename == "" {
@@ -45,6 +53,14 @@ func WriteFile(item *shared.Item) error {
 	}
 
 	item.Filename = newFilename
+
+	if config.CONFIG.EnableDotManagerAdd {
+		err := addFileInDotManager(newFilename)
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -67,7 +83,7 @@ func ReadFiles() (items []list.Item, err error) {
 	errorlist := []error{}
 	for _, file := range files {
 		if path.Ext(file.Name()) == ".md" {
-			item, err := markdown.ParseFile(path.Join(notesPath, file.Name()))
+			item, err := markdown.ParseFile(fullNotesFileName(file.Name()))
 			if err != nil {
 				errorlist = append(errorlist, err)
 				continue
@@ -81,6 +97,5 @@ func ReadFiles() (items []list.Item, err error) {
 
 func DeleteFile(item shared.Item) error {
 	// FIXME: Should probably add a trashcan or something
-	notesPath := path.Join(config.CONFIG.LibPath, "notes")
-	return os.Remove(path.Join(notesPath, item.Filename))
+	return os.Remove(fullNotesFileName(item.Filename))
 }

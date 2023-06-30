@@ -29,3 +29,7 @@ func (i Item) FilterValue() string {
 
 func (i Item) Body() string             { return i.BodyText }
 func (i *Item) SetBodyText(text string) { i.BodyText = text }
+
+type DotManagerData struct {
+	Filename string
+}

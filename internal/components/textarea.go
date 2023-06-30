@@ -60,6 +60,7 @@ func NewTextarea(item *shared.Item) textarea.Model {
 	t.KeyMap.DeleteWordBackward.SetEnabled(false)
 	t.KeyMap.LineNext = key.NewBinding(key.WithKeys("down"))
 	t.KeyMap.LinePrevious = key.NewBinding(key.WithKeys("up"))
+	t.CharLimit = 0
 
 	if item != nil {
 		t.SetValue(BodyText(*item))

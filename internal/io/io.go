@@ -33,7 +33,7 @@ func saveToFile(item shared.Item, NewFilename, OldFilename string) error {
 }
 
 func WriteFile(item *shared.Item) error {
-	newFilename := strings.TrimSpace(strings.ToLower(strings.ReplaceAll(item.Title(), " ", "_")))
+	newFilename := strings.TrimSpace(strings.ToLower(strings.ReplaceAll(item.TitleVar, " ", "_")))
 	if newFilename == "" {
 		return errors.New("title cannot be empty")
 	}

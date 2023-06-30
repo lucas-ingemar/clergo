@@ -31,4 +31,6 @@ func addFileInDotManager(filename string) error {
 	if err := cmd.Run(); err != nil {
 		return err
 	}
+
+	return nil
 }

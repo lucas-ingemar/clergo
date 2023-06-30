@@ -1,15 +1,11 @@
 package io
 
 import (
-	"bytes"
 	"errors"
 	"os"
-	"os/exec"
 	"path"
 	"sort"
 	"strings"
-
-	"text/template"
 
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/lucas-ingemar/clergo/internal/config"

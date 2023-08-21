@@ -54,14 +54,16 @@ func NewItemDelegate(keys *DelegateKeyMap) list.DefaultDelegate {
 type DelegateKeyMap struct {
 	Choose key.Binding
 	Remove key.Binding
+	Help   key.Binding
 }
 
 // Additional short help entries. This satisfies the help.KeyMap interface and
 // is entirely optional.
 func (d DelegateKeyMap) ShortHelp() []key.Binding {
 	return []key.Binding{
-		d.Choose,
-		d.Remove,
+		d.Help,
+		// d.Choose,
+		// d.Remove,
 	}
 }
 
@@ -70,8 +72,9 @@ func (d DelegateKeyMap) ShortHelp() []key.Binding {
 func (d DelegateKeyMap) FullHelp() [][]key.Binding {
 	return [][]key.Binding{
 		{
-			d.Choose,
-			d.Remove,
+			d.Help,
+			// d.Choose,
+			// d.Remove,
 		},
 	}
 }
@@ -85,6 +88,9 @@ func NewDelegateKeyMap() *DelegateKeyMap {
 		Remove: key.NewBinding(
 			key.WithKeys("x", "backspace"),
 			key.WithHelp("x", "delete"),
+		),
+		Help: key.NewBinding(
+			key.WithHelp("?", "help"),
 		),
 	}
 }

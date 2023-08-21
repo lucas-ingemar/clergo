@@ -5,6 +5,8 @@ import (
 	"os"
 	"path"
 
+	"github.com/rs/zerolog/log"
+
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/textarea"
@@ -81,26 +83,26 @@ func newListKeyMap() *listKeyMap {
 			key.WithKeys("a"),
 			key.WithHelp("a", "add item"),
 		),
-		toggleSpinner: key.NewBinding(
-			key.WithKeys("s"),
-			key.WithHelp("s", "toggle spinner"),
-		),
-		toggleTitleBar: key.NewBinding(
-			key.WithKeys("T"),
-			key.WithHelp("T", "toggle title"),
-		),
-		toggleStatusBar: key.NewBinding(
-			key.WithKeys("S"),
-			key.WithHelp("S", "toggle status"),
-		),
-		togglePagination: key.NewBinding(
-			key.WithKeys("P"),
-			key.WithHelp("P", "toggle pagination"),
-		),
-		toggleHelpMenu: key.NewBinding(
-			key.WithKeys("H"),
-			key.WithHelp("H", "toggle help"),
-		),
+		// toggleSpinner: key.NewBinding(
+		// 	key.WithKeys("s"),
+		// 	key.WithHelp("s", "toggle spinner"),
+		// ),
+		// toggleTitleBar: key.NewBinding(
+		// 	key.WithKeys("T"),
+		// 	key.WithHelp("T", "toggle title"),
+		// ),
+		// toggleStatusBar: key.NewBinding(
+		// 	key.WithKeys("S"),
+		// 	key.WithHelp("S", "toggle status"),
+		// ),
+		// togglePagination: key.NewBinding(
+		// 	key.WithKeys("P"),
+		// 	key.WithHelp("P", "toggle pagination"),
+		// ),
+		// toggleHelpMenu: key.NewBinding(
+		// 	key.WithKeys("H"),
+		// 	key.WithHelp("H", "toggle help"),
+		// ),
 		scrollPaperUp: key.NewBinding(
 			key.WithKeys("J"),
 			key.WithHelp("J", "Scroll paper up"),
@@ -147,12 +149,12 @@ func newModel() model {
 	itemsList.Styles.Title = titleStyle
 	itemsList.AdditionalFullHelpKeys = func() []key.Binding {
 		return []key.Binding{
-			listKeys.toggleSpinner,
+			// listKeys.toggleSpinner,
 			listKeys.insertItem,
-			listKeys.toggleTitleBar,
-			listKeys.toggleStatusBar,
-			listKeys.togglePagination,
-			listKeys.toggleHelpMenu,
+			// listKeys.toggleTitleBar,
+			// listKeys.toggleStatusBar,
+			// listKeys.togglePagination,
+			// listKeys.toggleHelpMenu,
 			listKeys.scrollPaperUp,
 		}
 	}
@@ -197,6 +199,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				// FIXME: Error handler
 				err := io.WriteFile(&item)
 				if err != nil {
+					log.Err(err).Msg("could not write file")
 					return m, m.list.NewStatusMessage(statusMessageStyle(err.Error()))
 				}
 				return m, nil
@@ -219,28 +222,28 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, m.list.NewStatusMessage(statusMessageStyle(err.Error()))
 			}
 
-		case key.Matches(msg, m.keys.toggleSpinner):
-			cmd := m.list.ToggleSpinner()
-			return m, cmd
+		// case key.Matches(msg, m.keys.toggleSpinner):
+		// 	cmd := m.list.ToggleSpinner()
+		// 	return m, cmd
 
-		case key.Matches(msg, m.keys.toggleTitleBar):
-			v := !m.list.ShowTitle()
-			m.list.SetShowTitle(v)
-			m.list.SetShowFilter(v)
-			m.list.SetFilteringEnabled(v)
-			return m, nil
+		// case key.Matches(msg, m.keys.toggleTitleBar):
+		// 	v := !m.list.ShowTitle()
+		// 	m.list.SetShowTitle(v)
+		// 	m.list.SetShowFilter(v)
+		// 	m.list.SetFilteringEnabled(v)
+		// 	return m, nil
 
-		case key.Matches(msg, m.keys.toggleStatusBar):
-			m.list.SetShowStatusBar(!m.list.ShowStatusBar())
-			return m, nil
+		// case key.Matches(msg, m.keys.toggleStatusBar):
+		// 	m.list.SetShowStatusBar(!m.list.ShowStatusBar())
+		// 	return m, nil
 
-		case key.Matches(msg, m.keys.togglePagination):
-			m.list.SetShowPagination(!m.list.ShowPagination())
-			return m, nil
+		// case key.Matches(msg, m.keys.togglePagination):
+		// 	m.list.SetShowPagination(!m.list.ShowPagination())
+		// 	return m, nil
 
-		case key.Matches(msg, m.keys.toggleHelpMenu):
-			m.list.SetShowHelp(!m.list.ShowHelp())
-			return m, nil
+		// case key.Matches(msg, m.keys.toggleHelpMenu):
+		// 	m.list.SetShowHelp(!m.list.ShowHelp())
+		// 	return m, nil
 
 		case key.Matches(msg, m.keys.insertItem):
 			m.delegateKeys.Remove.SetEnabled(true)
@@ -307,8 +310,21 @@ func main() {
 	// fmt.Println(err)
 	// return
 
+	logger := shared.ConfigureLogger(shared.LoggerConfig{
+		ConsoleLoggingEnabled: false,
+		EncodeLogsAsJson:      false,
+		FileLoggingEnabled:    true,
+		Directory:             config.CONFIG.LibPath,
+		Filename:              "clergo.log",
+		MaxSize:               10,
+		MaxBackups:            1,
+		MaxAge:                0,
+	})
+
+	log.Logger = *logger
+
 	if _, err := tea.NewProgram(newModel()).Run(); err != nil {
-		fmt.Println("Error running program:", err)
+		log.Fatal().Err(err).Msg("error running program")
 		os.Exit(1)
 	}
 }
